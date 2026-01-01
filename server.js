@@ -8,7 +8,10 @@ connectDB();
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173", "https://splitr-tracker.vercel.app"],
+    credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -16,10 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/users', require('./backend/routes/userRoutes'));
 app.use('/api/groups', require('./backend/routes/groupRoutes.js'));
 app.use('/api/expenses', require('./backend/routes/expenseRoutes.js'));
-
-
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {
-    console.log(`listening on http://localhost:${PORT}`);
+    console.log(`listening on ${PORT}`);
 });
